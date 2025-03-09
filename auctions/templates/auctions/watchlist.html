@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {{message}}
+    {% if user.is_authenticated %}
+        <h2>Watchlist items</h2>
+        {% for item in listings %}
+        {% if not item.closed %}
+            <ul>
+                <li>
+                <h3><a href= "{% url 'listing' item.id %}">{{item}}</a></h3>
+                <br>
+                <p>Price: {{item.starting_bid}} $</p>
+                <p> {{item.description}} </p>
+                {% if item.image_url %}
+                <div style = "text-align : right" >
+                <img src = "{{item.image_url}}" >
+                </div>
+                {% endif %}
+                </li>
+            </ul>
+        {% endif %}
+            {% empty %}  
+            <p>Your Watchlist is empty..</p>
+            
+
+    {% endfor %}
+    {% endif %}
+
+{% endblock %}
