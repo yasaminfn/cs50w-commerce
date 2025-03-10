@@ -8,7 +8,7 @@
             <li>  
                 <h3><a href="{% url 'listing' item.id %}">{{ item.title }}</a></h3>  
                 <br>  
-                <p>Price: {{ item.starting_bid }} $</p>  
+                <p>Current Price: {{ item.starting_bid.bid_price }} $</p>  
                 <p>{{ item.description }}</p>  
                 {% if item.image_url %}  
                     <div style="text-align: right;">  

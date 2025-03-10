@@ -1,6 +1,11 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+    {% if message %}
+        <div class="alert alert-dark" role="alert">
+            {{message}}
+        </div>
+    {% endif %}
     <h2>Active Listings</h2>
 
     {% for item in listings %}

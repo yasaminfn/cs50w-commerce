@@ -29,7 +29,7 @@
             
                 {% endif %}
                 {% if user.is_authenticated %}
-                    {% if isowner %}
+                    {% if isowner and isactive %}
                         <form action="{% url 'closeauction' listing.id %}" method="post">  
                         {% csrf_token %}  
                         <button type="submit" class="btn btn-danger">Close the Auction!</button>  
@@ -55,11 +55,15 @@
                 {% endif %}
 
                 {% if user.is_authenticated %}
+                    {% if isactive %}
                         <form action="{% url 'addbid' listing.id %}" method="POST">  
                             {% csrf_token %}  
                             <input type="number" min="0" placeholder="add new bid" name="newbid">
                             <button type="submit" class="btn btn-success">Bid</button>  
                         </form>
+                    {% else %}
+                        <p style=" color:red; ">Auction is Closed!</p>
+                    {% endif %}
                 {% endif %}
 
 

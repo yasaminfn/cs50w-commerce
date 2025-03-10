@@ -100,6 +100,7 @@ def listing(request, listing_id):
     watchlist = request.user in listing.watchlist.all()
     comments = listing.listingscomment.all()
     isowner = listing.seller.username == request.user.username
+    isactive = not listing.closed
         
 
     #or comments=Comments.objects.filter(listing=listing_id)
@@ -108,6 +109,7 @@ def listing(request, listing_id):
         "watchlist": watchlist,
         "comments" : comments,
         "isowner" : isowner,
+        "isactive" : isactive,
     })
 
 def page(request, listing_id):  
@@ -184,8 +186,7 @@ def addbid(request, listing_id):
 
         watchlist= request.user in listing.watchlist.all()
         comments=listing.listingscomment.all()
-        print(bid_price)
-        print(listing.starting_bid,bid_price)
+        isactive = not listing.closed
         #highest_bid = Bid.objects.filter(listing=listing).order_by('-bid_price').first()  
 
 
@@ -206,6 +207,7 @@ def addbid(request, listing_id):
             'update': False, 
             "watchlist": watchlist,
             "comments" : comments,
+            "isactive" : isactive,
             })
     
         return render(request, "auctions/listingpage.html", {
@@ -214,16 +216,18 @@ def addbid(request, listing_id):
             'updated': True, 
             "watchlist": watchlist,
             "comments" : comments,
+            "isactive" : isactive,
             })
 
 def close(request, listing_id):
-    listing=Listing.objects.get(id=listing_id)
-    listing.closed=True
-    listing.save()
-    active = Listing.objects.filter(closed = False)
-    return render(request, "auctions/index.html", {
-        "listings" : active,
-        "message" : 'Your Auction is Closed!',
-    })  
+    if request.method == "POST":
+        listing=Listing.objects.get(id=listing_id)
+        listing.closed=True
+        listing.save()
+        active = Listing.objects.filter(closed = False)
+        return render(request, "auctions/index.html", {
+            "listings" : active,
+            "message" : 'Your Auction is Closed!',
+        })  
 
 
