@@ -1,30 +1,35 @@
 {% extends "auctions/layout.html" %}
+{% load static %}
 
 {% block body %}
     {{message}}
     {% if user.is_authenticated %}
         <h2>Watchlist items</h2>
+        <div class="row mx-3">
         {% for item in listings %}
         
-            <ul>
-                <li>
-                <h3><a href= "{% url 'listing' item.id %}">{{item}}</a></h3>
-                <br>
-                <p>Current Price: {{item.current_price}} $</p>
-                <p> {{item.description}} </p>
-                {% if item.image_url %}
-                <div style = "text-align : right" >
-                <img src = "{{item.image_url}}" >
-                </div>
-                {% endif %}
-                </li>
-            </ul>
+            <div class="card mx-3" style="width: 18rem;">
+                        {% if item.image_url %}
+                        <img class="card-img-top" src="{{item.image_url}}" alt="{{item.title}}">
+                        {% else  %}
+                        <img class="card-img-top" src="{% static 'images/no-image.png' %}" alt="{{item.title}}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.title}}</h5>
+                            <p class="card-text">{{item.description}}</p>
+                            <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Current Price: {{item.current_price}} $</li>
+                            </ul>
+                            <a href="{% url 'listing' item.id %}" class="btn btn-primary">Details</a>
+                        </div>
+            </div>
         
             {% empty %}  
             <p> Watchlist is empty..</p>
             
 
     {% endfor %}
+    </div>
     {% endif %}
 
 {% endblock %}

@@ -1,3 +1,8 @@
 body {
     padding: 10px;
 }
+.card-img-top {
+    width: 100%;          /* Make sure the image fills the card width */  
+    height: 180px;         /* Set a fixed height */  
+    object-fit: cover;     /* Crop the image to fit, preserving aspect ratio */  
+}

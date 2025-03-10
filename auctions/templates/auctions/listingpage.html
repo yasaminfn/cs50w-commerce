@@ -77,14 +77,15 @@
                             <button type="submit" class="btn btn-warning">Add Comment</button>  
                         </form>
                     {% endif %}
-                    <ul>
+                    
                     {% for item in comments %}
-                        <li>
+                        
                         <br>
-                        <h5>{{item.user}}</h5>
-                        {{item.content}}
-                        </li>
+                        <h6>{{item.user}}</h6>
+                        <ul class="list-group">
+                        <li class="list-group-item">{{item.content}}</li>
+                        
                     {% endfor %}
-                    </ul>
+                    
                 </div>
 {% endblock %}
